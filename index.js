@@ -45,6 +45,27 @@ async function run() {
             const user = await cursor.toArray();
             res.send(user);
         });
+        // make admin 
+        app.put('/users/admin', async (req, res) => {
+            const user = req.body;
+            const filter = { email: user.email };
+            const updateDoc = { $set: { role: 'admin' } };
+            const result = await userCollection.updateOne(filter, updateDoc);
+            res.json(result);
+        })
+
+        // get admin 
+        app.get('/users/:email', async (req, res) => {
+            const email = req.params.email;
+            const query = { email: email };
+            const user = await userCollection.findOne(query);
+            let isAdmin = false;
+            if (user?.role === 'admin') {
+                isAdmin = true;
+            }
+            res.json({ admin: isAdmin });
+        });
+
 
         // find all properties
         app.get('/allProperties', async (req, res) => {
@@ -78,6 +99,7 @@ async function run() {
             const review = req.body;
             const result = await customerReview.insertOne(review);
             res.json(result);
+
         });
 
         // get customer reviews in homepage
