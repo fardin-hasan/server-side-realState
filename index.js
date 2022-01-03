@@ -91,6 +91,33 @@ async function run() {
         })
 
 
+        // add property
+        app.post('/property', async (req, res) => {
+            const user = req.body;
+            const result = await allProperties.insertOne(user);
+            res.json(result);
+
+        });
+
+
+        // manage or delete property
+        app.delete('/property/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await allProperties.deleteOne(query);
+            res.json(result)
+        })
+
+
+
+
+
+
+
+
+
+
+
 
 
     } finally {
