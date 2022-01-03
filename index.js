@@ -20,7 +20,7 @@ async function run() {
         const allAgent = database.collection("agentsCollections");
         const allBlogs = database.collection("blogsCollections");
 
-        registration
+        // registration
         app.put('/users', async (req, res) => {
             const user = req.body;
             const filter = { email: user.email };
