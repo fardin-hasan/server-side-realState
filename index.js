@@ -46,8 +46,6 @@ async function run() {
             res.send(user);
         });
 
-
-
         // find all properties
         app.get('/allProperties', async (req, res) => {
             const cursor = allProperties.find({});
@@ -80,7 +78,6 @@ async function run() {
             const review = req.body;
             const result = await customerReview.insertOne(review);
             res.json(result);
-
         });
 
         // get customer reviews in homepage
