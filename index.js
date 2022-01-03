@@ -19,15 +19,31 @@ async function run() {
         const allProperties = database.collection("propertiesCollections");
         const allAgent = database.collection("agentsCollections");
         const allBlogs = database.collection("blogsCollections");
+        const userCollection = database.collection('users');
+        // post user -
+        app.post('/users', async (req, res) => {
+            const user = req.body
+            const result = await userCollection.insertOne(user);
+            console.log(result);
+            res.json(result);
+        });
 
-        // registration
+        // upsert user -
         app.put('/users', async (req, res) => {
             const user = req.body;
             const filter = { email: user.email };
             const options = { upsert: true };
-            const updateDoc = { $set: user }
-            const result = await userCollection.updateOne(filter, updateDoc, options)
-        })
+            const updateDoc = { $set: user };
+            const result = await userCollection.updateOne(filter, updateDoc, options);
+            res.json(result);
+        });
+        // get user api-
+        app.get('/users', async (req, res) => {
+            const cursor = userCollection.find({});
+            const user = await cursor.toArray();
+            res.send(user);
+        });
+
 
 
         // find all properties
