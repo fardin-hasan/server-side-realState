@@ -108,6 +108,22 @@ async function run() {
             res.json(result)
         })
 
+        // add agent
+        app.post('/agent', async (req, res) => {
+            const agent = req.body;
+            const result = await allAgent.insertOne(agent);
+            res.json(result);
+
+        });
+
+        // delete agent
+        app.delete('/agent/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await allAgent.deleteOne(query);
+            res.json(result)
+        })
+
 
 
 
