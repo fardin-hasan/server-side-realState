@@ -20,6 +20,8 @@ async function run() {
         const allAgent = database.collection("agentsCollections");
         const allBlogs = database.collection("blogsCollections");
         const userCollection = database.collection('users');
+        const customerReview = database.collection("customerReviewCollections");
+
         // post user -
         app.post('/users', async (req, res) => {
             const user = req.body
@@ -72,6 +74,23 @@ async function run() {
             const blogs = await cursor.toArray();
             res.send(blogs);
         });
+
+        // Add Review post
+        app.post('/customerReview', async (req, res) => {
+            const review = req.body;
+            const result = await customerReview.insertOne(review);
+            res.json(result);
+
+        });
+
+        // get customer reviews in homepage
+        app.get('/customerReview', async (req, res) => {
+            const cursor = customerReview.find({});
+            const review = await cursor.toArray();
+            res.send(review);
+        })
+
+
 
 
     } finally {
