@@ -74,7 +74,7 @@ async function run() {
             res.send(properties);
         });
         // single property based on product id 
-        app.get('/purchase/:id', async (req, res) => {
+        app.get('/property/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
             const user = await allProperties.findOne(query);
