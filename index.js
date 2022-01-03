@@ -73,6 +73,13 @@ async function run() {
             const properties = await cursor.toArray();
             res.send(properties);
         });
+        // single property based on product id 
+        app.get('/purchase/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const user = await allProperties.findOne(query);
+            res.send(user);
+        });
 
         // get limited properties for homepage
         app.get('/properties', async (req, res) => {
