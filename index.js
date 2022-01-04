@@ -21,6 +21,7 @@ async function run() {
         const allBlogs = database.collection("blogsCollections");
         const userCollection = database.collection('users');
         const customerReview = database.collection("customerReviewCollections");
+        const bookingCollection = database.collection("bookingCollections");
 
         // post user -
         app.post('/users', async (req, res) => {
@@ -150,7 +151,22 @@ async function run() {
             res.json(result)
         })
 
+        // make bookings or orders
+        app.post('/booking', async (req, res) => {
+            const purchase = req.body;
+            const result = await bookingCollection.insertOne(purchase);
+            res.json(result);
 
+        });
+
+        // get my booking
+        app.get('/myBooking', async (req, res) => {
+            const email = req.query.email;
+            const query = { email: email }
+            const cursor = bookingCollection.find(query);
+            const booking = await cursor.toArray();
+            res.send(booking);
+        });;
 
 
 
